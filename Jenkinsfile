@@ -76,30 +76,22 @@ pipeline {
 
     post {
         always {
-            sh '''
-                echo "dojoPublisher(artifact: 'results/semgrep-report.json',
-                        productName: 'Juice Shop',
-                        scanType: 'Semgrep JSON Report',
-                        engagementName: 'damian.szopinski@verestro.com')"
-                '''
-            sh '''
-                echo "dojoPublisher(artifact: 'results/zap_xml_report.xml',
-                        productName: 'Juice Shop',
-                        scanType: 'ZAP Scan',
-                        engagementName: 'damian.szopinski@verestro.com')"
-                '''
-            sh '''
-                echo "dojoPublisher(artifact: 'results/sca-osv-scanner.json',
-                        productName: 'Juice Shop',
-                        scanType: 'OSV Scan',
-                        engagementName: 'damian.szopinski@verestro.com')"
-                '''
-            sh '''
-                echo "dojoPublisher(artifact: 'results/truffle-hog-scanner.json',
-                        productName: 'Juice Shop',
-                        scanType: 'Trufflehog Scan',
-                        engagementName: 'damian.szopinski@verestro.com')"
-                '''
+            defectDojoPublisher(artifact: 'results/semgrep-report.json',
+                    productName: 'Juice Shop',
+                    scanType: 'Semgrep JSON Report',
+                    engagementName: 'damian.szopinski@verestro.com')
+            defectDojoPublisher(artifact: 'results/zap_xml_report.xml',
+                    productName: 'Juice Shop',
+                    scanType: 'ZAP Scan',
+                    engagementName: 'damian.szopinski@verestro.com')
+            defectDojoPublisher(artifact: 'results/sca-osv-scanner.json',
+                    productName: 'Juice Shop',
+                    scanType: 'OSV Scan',
+                    engagementName: 'damian.szopinski@verestro.com')
+            defectDojoPublisher(artifact: 'results/truffle-hog-scanner.json',
+                    productName: 'Juice Shop',
+                    scanType: 'Trufflehog Scan',
+                    engagementName: 'damian.szopinski@verestro.com')
         }
     }
 
