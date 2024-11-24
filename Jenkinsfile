@@ -28,7 +28,7 @@ pipeline {
                     sleep 5
                 '''
                 sh '''
-                    mkdir -p zap-config && cp ./.zap/* zap-config && \
+                    mkdir -p zap-config && cp -r .zap zap-config && \
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
                         -v ${WORKSPACE}/zap-config:/zap/wrk/:rw \
