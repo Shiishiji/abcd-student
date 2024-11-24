@@ -29,7 +29,6 @@ pipeline {
                 '''
                 sh '''
                     docker run --name zap \
-                        --rm \
                         --add-host=host.docker.internal:host-gateway \
                         -v ./.zap:/zap/wrk/:rw \
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c \
