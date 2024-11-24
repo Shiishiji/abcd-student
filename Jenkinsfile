@@ -28,10 +28,9 @@ pipeline {
                     sleep 5
                 '''
                 sh '''
-                    mkdir -p zap-config && cp -r .zap zap-config && \
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
-                        -v ${WORKSPACE}/zap-config:/zap/wrk/:rw \
+                        -v /home/dszopinski/Projects/ABC_DevSecOps/abcd-student/.zap:/zap/wrk/:rw \
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c \
                         "ls -al /zap/wrk && zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" 
                         || true
@@ -49,17 +48,6 @@ pipeline {
                     '''
                 }
             }
-        }
-    }
-    post {
-        // Clean after build
-        always {
-            cleanWs(cleanWhenNotBuilt: false,
-                    deleteDirs: true,
-                    disableDeferredWipeout: true,
-                    notFailBuild: true,
-                    patterns: [[pattern: '.gitignore', type: 'INCLUDE'],
-                               [pattern: '.propsfile', type: 'EXCLUDE']])
         }
     }
 
