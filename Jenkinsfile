@@ -20,6 +20,7 @@ pipeline {
         }
         stage('ZAP Passive Scan') {
             steps {
+                sh 'mkdir results'
                 sh '''
                     docker run --name juice-shop -d --rm \
                         -p 3000:3000 \
