@@ -24,16 +24,21 @@ pipeline {
             }
         }
 
-        stage('TruffleHog scan') {
+        stage('Semgrep scan') {
             steps {
-                sh 'trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/truffle-hog-scanner.json'
+                sh '(semgrep scan --config auto --json-output=${WORKSPACE}/results/semgrep-report.json) || true'
             }
         }
 
+        stage('TruffleHog scan') {
+            steps {
+                sh '(trufflehog git file://. --only-verified --json > ${WORKSPACE}/results/truffle-hog-scanner.json) || true'
+            }
+        }
 
         stage('SCA scan') {
             steps {
-                sh 'osv-scanner scan --lockfile package-lock.json --format json --output ${WORKSPACE}/results/sca-osv-scanner.json'
+                sh '(osv-scanner scan --lockfile package-lock.json --format json --output ${WORKSPACE}/results/sca-osv-scanner.json) || true'
             }
         }
 
@@ -71,6 +76,12 @@ pipeline {
 
     post {
         always {
+            sh '''
+                echo "dojoPublisher(artifact: 'results/semgrep-report.json',
+                        productName: 'Juice Shop',
+                        scanType: 'Semgrep JSON Report',
+                        engagementName: 'damian.szopinski@verestro.com')"
+                '''
             sh '''
                 echo "dojoPublisher(artifact: 'results/zap_xml_report.xml',
                         productName: 'Juice Shop',
