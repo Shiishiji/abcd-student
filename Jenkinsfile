@@ -80,13 +80,13 @@ pipeline {
             sh '''
                 echo "dojoPublisher(artifact: 'results/sca-osv-scanner.json',
                         productName: 'Juice Shop',
-                        scanType: 'OSV-Scanner',
+                        scanType: 'OSV Scan',
                         engagementName: 'damian.szopinski@verestro.com')"
                 '''
             sh '''
                 echo "dojoPublisher(artifact: 'results/truffle-hog-scanner.json',
                         productName: 'Juice Shop',
-                        scanType: 'OSV-Scanner',
+                        scanType: 'Trufflehog Scan',
                         engagementName: 'damian.szopinski@verestro.com')"
                 '''
         }
