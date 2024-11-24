@@ -27,7 +27,7 @@ pipeline {
                         bkimminich/juice-shop
                     sleep 5
                 '''
-                sh 'ls -al'
+                sh 'ls -al && ls -al ${WORKSPACE}/.zap'
                 sh '''
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
