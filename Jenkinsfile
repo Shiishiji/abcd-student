@@ -24,7 +24,7 @@ pipeline {
                 sh '''
                     docker run --name juice-shop -d --rm \
                         -p 3000:3000 \
-                        -v ${WORKSPACE}/zap-config:/juice-shop/.zap/:r \
+                        -v ${WORKSPACE}/zap-config:/juice-shop/.zap/:rw \
                         bkimminich/juice-shop
                     sleep 5
                 '''
