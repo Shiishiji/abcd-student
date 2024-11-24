@@ -53,6 +53,12 @@ pipeline {
                 }
             }
         }
+
+        stage('SCA scan') {
+            steps {
+                sh 'osv-scanner scan --lockfile package-lock.json --format json --output ${WORKSPACE}/results/sca-osv-scanner.json'
+            }
+        }
     }
 
     post {
@@ -61,6 +67,12 @@ pipeline {
                 echo dojoPublisher(artifact: 'results/zap_xml_report.xml',
                         productName: 'Juice Shop',
                         scanType: 'ZAP Scan',
+                        engagementName: 'damian.szopinski@verestro.com')
+                '''
+            sh '''
+                echo dojoPublisher(artifact: 'results/sca-osv-scanner.json',
+                        productName: 'Juice Shop',
+                        scanType: 'OSV-Scanner',
                         engagementName: 'damian.szopinski@verestro.com')
                 '''
         }
