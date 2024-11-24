@@ -28,10 +28,10 @@ pipeline {
                     sleep 5
                 '''
                 sh '''
-                    ls -al && \
+                    mkdir -p zap-config && cp ./.zap/* zap-config && \
                     docker run --name zap \
                         --add-host=host.docker.internal:host-gateway \
-                        -v ${WORKSPACE}/.zap:/zap/wrk/:rw \
+                        -v ${WORKSPACE}/zap-config:/zap/wrk/:rw \
                         -t ghcr.io/zaproxy/zaproxy:stable bash -c \
                         "ls -al /zap/wrk && zap.sh -cmd -addonupdate; zap.sh -cmd -addoninstall communityScripts -addoninstall pscanrulesAlpha -addoninstall pscanrulesBeta -autorun /zap/wrk/passive.yaml" 
                         || true
